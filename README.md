@@ -6,31 +6,31 @@ Agent skills for [Supalytics](https://supalytics.co) CLI - works with Claude Cod
 
 | Skill | Description |
 |-------|-------------|
-| [supalytics-cli](./supalytics-cli/) | Query web analytics data - pageviews, visitors, revenue, conversions, and more |
+| [supalytics](./supalytics/) | Query web analytics data - pageviews, visitors, revenue, conversions, and more |
 
 ## Installation
 
 ### Claude Code
 
 ```bash
-cp -r supalytics-cli ~/.claude/skills/
+cp -r supalytics ~/.claude/skills/
 ```
 
 ### skills.sh (Vercel)
 
 ```bash
-npx skills add supalytics-co/skills --skill supalytics-cli
+npx skills add supalytics-co/skills --skill supalytics
 ```
 
 ### OpenClaw / ClawHub
 
 ```bash
-clawhub install supalytics-cli
+clawhub install supalytics
 ```
 
 Or manually:
 ```bash
-cp -r supalytics-cli ~/.openclaw/skills/
+cp -r supalytics ~/.openclaw/skills/
 ```
 
 ## Requirements
