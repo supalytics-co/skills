@@ -226,7 +226,16 @@ supalytics trend --period 7d
 
 | Issue | Solution |
 |-------|----------|
-| `command not found: supalytics` | Ensure Bun is installed and `~/.bun/bin` is in PATH |
+| `command not found: supalytics` | Ensure Bun is installed and `~/.bun/bin` is in PATH, or symlink to system path (see below) |
 | `No site specified` | Run `supalytics default <domain>` to set default site |
 | `Unauthorized` | Run `supalytics login` to re-authenticate |
 | No data returned | Check site has tracking installed, try `-t` for test mode |
+
+### OpenClaw / Daemon Usage
+
+Bun installs to `~/.bun/bin` which isn't in PATH for daemon processes like OpenClaw. After installation, symlink to system path:
+
+```bash
+sudo ln -sf ~/.bun/bin/bun /usr/local/bin/bun
+sudo ln -sf ~/.bun/bin/supalytics /usr/local/bin/supalytics
+```
