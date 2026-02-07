@@ -61,13 +61,17 @@ supalytics sites add    # Create a new site
 ### Quick Stats
 
 ```bash
-supalytics stats              # Last 30 days (default)
-supalytics stats today        # Today only
-supalytics stats yesterday    # Yesterday
-supalytics stats week         # This week
-supalytics stats month        # This month
-supalytics stats 7d           # Last 7 days
-supalytics stats --all        # Include breakdowns (pages, referrers, countries, etc.)
+supalytics stats                # Last 30 days (default)
+supalytics stats -p today       # Today only
+supalytics stats -p yesterday   # Yesterday
+supalytics stats -p week        # This week
+supalytics stats -p month       # This month
+supalytics stats -p 7d          # Last 7 days
+supalytics stats -p 5d          # Any arbitrary days
+supalytics stats -p 2mo         # Any arbitrary months
+supalytics stats -p all         # All time
+supalytics stats --all          # Include breakdowns (pages, referrers, countries, etc.)
+supalytics stats --start 2026-01-01 --end 2026-01-31  # Explicit date range
 ```
 
 ### Realtime Visitors
@@ -93,12 +97,47 @@ supalytics referrers          # Top referrers
 supalytics countries          # Traffic by country
 ```
 
+### Annotations
+
+```bash
+supalytics annotations                    # List annotations (last 30 days)
+supalytics annotations -p 90d             # Annotations from last 90 days
+supalytics annotations -p all             # All annotations
+supalytics annotations add 2026-01-15 "Launched v2.0"                          # Add annotation
+supalytics annotations add 2026-01-15 "Launched v2.0" -d "Major redesign"      # With description
+supalytics annotations remove <id>        # Remove an annotation
+```
+
+### Funnels
+
+```bash
+supalytics funnels                         # List all funnels
+supalytics funnels <id>                    # View funnel with conversion analysis
+supalytics funnels <id> -p 90d             # View with custom period
+supalytics funnels <id> --start 2026-01-01 --end 2026-01-31  # Explicit date range
+
+# Create a funnel with steps (page paths, events, or "purchase")
+supalytics funnels create "Signup Flow" --step "page:/pricing" --step "event:signup_clicked" --step "purchase"
+
+# Page matching with starts_with
+supalytics funnels create "Blog to Signup" --step "page:starts_with:/blog" --step "page:/signup" --step "event:account_created"
+
+# Ordered funnel (steps must happen in sequence)
+supalytics funnels create "Checkout" --mode ordered --step "page:/cart" --step "page:/checkout" --step "purchase"
+
+# Update funnel
+supalytics funnels update <id> --name "New Name"
+supalytics funnels update <id> --step "page:/pricing" --step "purchase"
+```
+
 ### Events
 
 ```bash
 supalytics events                          # List all custom events
 supalytics events signup                   # Properties for specific event
 supalytics events signup --property plan   # Breakdown by property value
+supalytics events -p 7d                    # Events from last 7 days
+supalytics events --start 2026-01-01 --end 2026-01-31  # Explicit date range
 ```
 
 ### Custom Queries
@@ -152,7 +191,7 @@ All analytics commands support:
 | Option | Description |
 |--------|-------------|
 | `-s, --site <domain>` | Query specific site (otherwise uses default) |
-| `-p, --period <period>` | Time period: `7d`, `14d`, `30d`, `90d`, `12mo`, `all` |
+| `-p, --period <period>` | Time period: `today`, `yesterday`, `week`, `month`, `7d`, `30d`, `90d`, `3mo`, `12mo`, `all` (any `Nd` or `Nmo` works) |
 | `--start <date>` | Start date (YYYY-MM-DD) |
 | `--end <date>` | End date (YYYY-MM-DD) |
 | `-f, --filter <filter>` | Filter: `field:operator:value` |
@@ -219,7 +258,7 @@ supalytics realtime
 
 ### "Show me the visitor trend this week"
 ```bash
-supalytics trend --period 7d
+supalytics trend -p 7d
 ```
 
 ## Troubleshooting
